@@ -122,33 +122,44 @@ button:hover {
     <button class="no dodge" onclick="showNo()">No</button>
   </div>
 
-  <!-- Step 5: Weekend / Valentine -->
+  <!-- Step 5: Weekend -->
   <div id="step5" class="hidden">
     <h1>Last question 🎬</h1>
     <p>Are you available this weekend or next weekend?</p>
-    <button class="yes" onclick="pickChoice('This weekend')">This Weekend</button>
-    <button class="yes" onclick="pickChoice('Next weekend')">Next Weekend</button>
-    <button class="yes" onclick="pickChoice('Next next week')">Next next week</button>
-    <button class="yes" onclick="pickChoice('Be my Valentine 💘')">OR… Just be my Valentine 💘</button>
+    <button class="yes" onclick="pickWeekend('This weekend'); celebrateYes()">This Weekend</button>
+    <button class="yes" onclick="pickWeekend('Next weekend'); celebrateYes()">Next Weekend</button>
   </div>
 
   <!-- Step 6: Email -->
-<div id="step6" class="hidden">
-  <h1>One last thing ✨</h1>
-  <p>Can I have your email? I’ll send a little receipt/confirmation 💌</p>
-  <input type="email" id="email" placeholder="your@email.com" />
-  <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-    <button class="alt" onclick="submitEmail()">Submit</button>
-    <button class="no" onclick="submitNoEmail()">This is the button that politely declines on everything</button>
+  <div id="step6" class="hidden">
+    <h1>One last thing ✨</h1>
+    <p>Can I have your email? I’ll send a little receipt/confirmation 💌</p>
+    <input type="email" id="email" placeholder="your@email.com" />
+    <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+      <button class="alt" onclick="submitEmail()">Submit</button>
+      <button class="no" onclick="submitNoEmail()">This is the button that politely declines on everything</button>
+    </div>
+    <p style="font-size:0.8rem;opacity:0.8;">Sender: patrickmueden11@gmail.com</p>
   </div>
-  <p style="font-size:0.8rem;opacity:0.8;">Sender: patrickmueden11@gmail.com</p>
-</div>
-
 
   <!-- Step 7: Thanks -->
   <div id="stepThanks" class="hidden">
     <h1>Thank you 💖</h1>
     <p>Thank you for accepting my invitation. I really appreciate it.</p>
+  </div>
+
+  <!-- Step No -->
+  <div id="stepNo" class="hidden">
+    <h1>All good 🙂</h1>
+    <p>No worries at all. Thanks for being honest. Just to be clear, I'm just giving this whole thing a try. I think if you clicked this button, I'll stop annoying or disturbing you. For everyone's time, I really appreciate the time and effort tho. Good luck in your studies <333.</p>
+  </div>
+
+  <!-- Feedback Step -->
+  <div id="stepFeedback" class="hidden">
+    <h1>Leave a quick feedback 💬</h1>
+    <p>You can leave a short message before you go.</p>
+    <input type="text" id="feedbackInput" placeholder="All good..." />
+    <button class="alt" onclick="submitFeedback()">Send Feedback</button>
   </div>
 
 </div>
@@ -157,73 +168,67 @@ button:hover {
 <script>
 emailjs.init("LPL0NS_Ijw-ORStji");
 
-let chosenWeekend = '';
+let chosenWeekend='';
 
-function nextStep(n){
-  document.getElementById('step'+n).classList.add('hidden');
-  document.getElementById('step'+(n+1)).classList.remove('hidden');
+function nextStep(current){
+  document.getElementById('step'+current).classList.add('hidden');
+  const next = document.getElementById('step'+(current+1));
+  next.classList.remove('hidden');
+  next.classList.add('fadeIn');
 }
 
-function pickChoice(choice){
-  chosenWeekend = choice;
+function makeDodging(btn) {
+  const card = document.getElementById('card');
+  const maxX = card.clientWidth - btn.offsetWidth - 20;
+  const maxY = card.clientHeight - btn.offsetHeight - 20;
+
+  const dodge = () => {
+    btn.style.position = 'absolute';
+    btn.style.left = Math.random() * maxX + 'px';
+    btn.style.top = Math.random() * maxY + 'px';
+  };
+
+  const startDodge = (e) => {
+    e.preventDefault(); // prevent accidental click
+    dodge();
+  };
+
+  btn.addEventListener('pointerover', startDodge);
+  btn.addEventListener('touchstart', startDodge);
+}
+
+// apply to all dodging buttons
+document.querySelectorAll('button.no.dodge').forEach(makeDodging);
+
+function pickWeekend(choice){
+  chosenWeekend=choice;
   document.getElementById('step5').classList.add('hidden');
-  document.getElementById('step6').classList.remove('hidden');
-  celebrateYes();
+  const next = document.getElementById('step6');
+  next.classList.remove('hidden');
+  next.classList.add('fadeIn');
 }
 
 function submitEmail(){
-  const email = document.getElementById('email').value;
-  if(!email) return alert("Please enter an email 😊");
-
-  // Custom message for Valentine
-  let customMessage = '';
-  if(chosenWeekend.includes('Valentine')){
-    customMessage = `
-Hi 💖,
-
-I didn’t really plan this perfectly,
-but I meant it sincerely.
-
-I chose to ask you something simple:
-to be my Valentine 🌹
-
-No pressure, no expectations —
-just a sweet moment, shared willingly.
-
-Happy Valentine’s 💘
-– Patrick
-`;
-  } else {
-    customMessage = `They said yes 😊\nChoice: ${chosenWeekend}`;
-  }
+  const email=document.getElementById('email').value;
+  if(!email) return alert('Please enter an email 😊');
 
   emailjs.send(
     "service_pat2joemama",
     "template_f0pzx8b",
-    {
-      to_email: email,
-      weekend: chosenWeekend,
-      message: customMessage
-    }
-  ).then(()=>{
+    {to_email: email, weekend: chosenWeekend}
+  )
+  .then(()=> {
     document.getElementById('step6').classList.add('hidden');
-    document.getElementById('stepThanks').classList.remove('hidden');
-  }).catch(err=>{
+    const thanks = document.getElementById('stepThanks');
+    thanks.classList.remove('hidden');
+    thanks.classList.add('fadeIn');
+  })
+  .catch(err => {
     console.log(err);
-    alert("Email failed 😢");
+    alert("Email failed 😢 Check console.");
   });
 }
 
-function celebrateYes(){
-  for(let i=0;i<5;i++){
-    const h=document.createElement('div');
-    h.className='heart';
-    h.textContent='❤️';
-    h.style.left=Math.random()*100+'%';
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),2000);
-  }
-}
 function submitNoEmail(){
   const email = document.getElementById('email')?.value.trim() || "No email provided";
 
@@ -250,22 +255,42 @@ function submitNoEmail(){
   });
 }
 
-// Optional: No dodge function if you want the “No” buttons to move
-function makeDodging(btn) {
-  const card = document.getElementById('card');
-  const maxX = card.clientWidth - btn.offsetWidth - 20;
-  const maxY = card.clientHeight - btn.offsetHeight - 20;
-  const dodge = () => {
-    btn.style.position = 'absolute';
-    btn.style.left = Math.random()*maxX+'px';
-    btn.style.top = Math.random()*maxY+'px';
-  };
-  const startDodge = (e)=>{ e.preventDefault(); dodge(); };
-  btn.addEventListener('pointerover', startDodge);
-  btn.addEventListener('touchstart', startDodge);
-}
-document.querySelectorAll('button.no.dodge').forEach(makeDodging);
-</script>
+function submitFeedback(){
+  const feedback = document.getElementById('feedbackInput').value.trim() || "No message";
 
+  emailjs.send(
+    "service_pat2joemama",
+    "template_f0pzx8b",
+    {
+      to_email: "patrickmueden11@gmail.com",
+      weekend: "Declined: " + chosenWeekend + " | Feedback: " + feedback
+    }
+  )
+  .then(()=>{
+    const feedbackStep = document.getElementById('stepFeedback');
+    feedbackStep.classList.add('hidden');
+
+    const noScreen = document.getElementById('stepNo');
+    noScreen.classList.remove('hidden');
+    noScreen.classList.add('fadeIn');
+  })
+  .catch(err=>{
+    console.log(err);
+    alert("Feedback email failed ❌ Check console.");
+  });
+}
+
+function celebrateYes(){
+  for(let i=0;i<5;i++){
+    const heart=document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left=Math.random()*100+'%';
+    heart.style.color='red';
+    heart.textContent='❤️';
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),2000);
+  }
+}
+</script>
 </body>
 </html>

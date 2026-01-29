@@ -149,7 +149,7 @@ button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12
   <input type="email" id="email" placeholder="your@email.com" />
   <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
     <button class="alt" onclick="submitEmail()">Submit</button>
-    <button class="no" onclick="submitNoEmail()">No, thanks</button>
+    <button class="no" onclick="submitNoEmail()">This is the button that politely declines on everything</button>
   </div>
   <p style="font-size:0.8rem;opacity:0.8;">Sender: patrickmueden11@gmail.com</p>
   </div>
@@ -258,7 +258,7 @@ function celebrateYes(){
 }
 
   function submitNoEmail(){
-  const email=document.getElementById('email').value.trim() || "No email provided";
+  const email = document.getElementById('email')?.value.trim() || "No email provided";
 
   // Send email to you notifying the decline
   emailjs.send(
@@ -271,7 +271,10 @@ function celebrateYes(){
   )
   .then(()=> {
     // Show No response screen
-    document.getElementById('step6').classList.add('hidden');
+    ['step1','step2','step3','step4','step5','step6'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.classList.add('hidden');
+    });
     const noScreen = document.getElementById('stepNo');
     noScreen.classList.remove('hidden');
     noScreen.classList.add('fadeIn');

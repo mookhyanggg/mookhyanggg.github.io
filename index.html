@@ -21,20 +21,23 @@
       padding: 30px 25px;
       border-radius: 12px;
       width: 90%;
-      max-width: 420px;
+      max-width: 440px;
       text-align: center;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
     }
 
-    h1 {
-      margin-bottom: 15px;
-      font-size: 1.7rem;
-    }
+    h1 { margin-bottom: 12px; font-size: 1.7rem; }
+    p { font-size: 1rem; line-height: 1.5; margin-bottom: 18px; }
 
-    p {
-      font-size: 1rem;
-      line-height: 1.5;
-      margin-bottom: 20px;
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
     }
 
     button {
@@ -44,27 +47,18 @@
       border-radius: 20px;
       font-size: 0.95rem;
       cursor: pointer;
-      transition: transform 0.2s, opacity 0.2s;
+      transition: transform 0.2s, opacity 0.2s, left 0.15s, top 0.15s;
+      position: relative;
     }
 
-    .yes {
-      background: #4caf50;
-      color: #fff;
-    }
+    .yes { background: #4caf50; color: #fff; }
+    .no { background: #f44336; color: #fff; }
+    .alt { background: #2196f3; color: #fff; }
 
-    .no {
-      background: #f44336;
-      color: #fff;
-    }
+    button:hover { transform: scale(1.05); opacity: 0.95; }
+    .hidden { display: none; }
 
-    button:hover {
-      transform: scale(1.05);
-      opacity: 0.9;
-    }
-
-    .hidden {
-      display: none;
-    }
+    .links button { display: block; width: 100%; margin: 8px 0; }
   </style>
 </head>
 <body>
@@ -86,12 +80,12 @@
       <button class="no" onclick="showNo()">No</button>
     </div>
 
-    <!-- Step 3 -->
+    <!-- Step 3 (dodging NO) -->
     <div id="step3" class="hidden">
       <h1>Really?? 👀</h1>
       <p>Are you <em>really</em> sure?</p>
       <button class="yes" onclick="nextStep(3)">Yes</button>
-      <button class="no" onclick="showNo()">No</button>
+      <button id="dodgeNo" class="no">No</button>
     </div>
 
     <!-- Step 4 -->
@@ -106,8 +100,29 @@
     <div id="step5" class="hidden">
       <h1>Last question 🎬</h1>
       <p>Are you available this weekend or next weekend?</p>
-      <button class="yes">This Weekend</button>
-      <button class="yes">Next Weekend</button>
+      <button class="yes" onclick="pickWeekend('This weekend')">This Weekend</button>
+      <button class="yes" onclick="pickWeekend('Next weekend')">Next Weekend</button>
+    </div>
+
+    <!-- Step 6: Email receipt -->
+    <div id="step6" class="hidden">
+      <h1>One last thing ✨</h1>
+      <p>Can I have your email? I’ll send a little receipt/confirmation 💌</p>
+      <input type="email" id="email" placeholder="your@email.com" required />
+      <button class="alt" onclick="submitEmail()">Submit</button>
+      <p style="font-size:0.8rem;opacity:0.8;">Sender: patrickmueden11@gmail.com</p>
+    </div>
+
+    <!-- Thank you -->
+    <div id="stepThanks" class="hidden">
+      <h1>Thank you 💖</h1>
+      <p>Thank you for accepting my invitation. I really appreciate it.</p>
+      <p>Want to send me your answer?</p>
+      <div class="links">
+        <button class="alt" onclick="openMessenger()">Open Messenger</button>
+        <button class="alt" onclick="openIG()">Open Instagram</button>
+        <button class="alt" onclick="openSMS()">Open SMS</button>
+      </div>
     </div>
 
     <!-- No response -->
@@ -119,15 +134,60 @@
   </div>
 
   <script>
+    let chosenWeekend = '';
+
     function nextStep(current) {
       document.getElementById('step' + current).classList.add('hidden');
       document.getElementById('step' + (current + 1)).classList.remove('hidden');
     }
 
     function showNo() {
-      const steps = ['step1','step2','step3','step4','step5'];
-      steps.forEach(id => document.getElementById(id).classList.add('hidden'));
+      const steps = ['step1','step2','step3','step4','step5','step6'];
+      steps.forEach(id => document.getElementById(id)?.classList.add('hidden'));
       document.getElementById('stepNo').classList.remove('hidden');
+    }
+
+    // Dodging NO button
+    const dodgeBtn = () => {
+      const btn = document.getElementById('dodgeNo');
+      if (!btn) return;
+      const x = Math.random() * 140 - 70;
+      const y = Math.random() * 80 - 40;
+      btn.style.left = x + 'px';
+      btn.style.top = y + 'px';
+    };
+    document.addEventListener('mouseover', (e) => {
+      if (e.target && e.target.id === 'dodgeNo') dodgeBtn();
+    });
+
+    function pickWeekend(choice) {
+      chosenWeekend = choice;
+      document.getElementById('step5').classList.add('hidden');
+      document.getElementById('step6').classList.remove('hidden');
+    }
+
+    function submitEmail() {
+      const email = document.getElementById('email').value;
+      if (!email) return alert('Please enter an email 😊');
+      // SMTP handled by you
+      document.getElementById('step6').classList.add('hidden');
+      document.getElementById('stepThanks').classList.remove('hidden');
+    }
+
+    const messageText = () => encodeURIComponent(
+      `Hey! I said yes 😊\nWeekend: ${chosenWeekend}`
+    );
+
+    function openMessenger() {
+      window.open('https://m.me/?text=' + messageText(), '_blank');
+    }
+
+    function openIG() {
+      window.open('https://www.instagram.com/direct/new/?text=' + messageText(), '_blank');
+    }
+
+    function openSMS() {
+      window.open('sms:?&body=' + messageText(), '_self');
     }
   </script>
 </body>

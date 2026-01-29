@@ -1,224 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Heyyy 👀</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heyyy 👀</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #fff;
+    }
 
-<style>
-body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-family:Arial, Helvetica, sans-serif;
-  background:linear-gradient(135deg,#1f1c2c,#928dab);
-  color:#fff;
-}
+    .card {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px 25px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 440px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
 
-.card{
-  background:rgba(0,0,0,0.65);
-  padding:30px 25px;
-  border-radius:14px;
-  width:90%;
-  max-width:440px;
-  text-align:center;
-  box-shadow:0 10px 25px rgba(0,0,0,0.4);
-  position:relative;
-  overflow:hidden;
-}
+    h1 { margin-bottom: 12px; font-size: 1.7rem; }
+    p { font-size: 1rem; line-height: 1.5; margin-bottom: 18px; }
 
-h1{margin-bottom:12px;}
-p{margin-bottom:18px;}
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+    }
 
-input{
-  width:100%;
-  padding:11px;
-  border-radius:8px;
-  border:none;
-  margin-bottom:14px;
-}
+    button {
+      padding: 10px 22px;
+      margin: 8px;
+      border: none;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.15s ease, left 0.15s ease, top 0.15s ease;
+    }
 
-button{
-  padding:10px 22px;
-  margin:8px;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-  transition:.2s;
-}
+    .yes { background: #4caf50; color: #fff; }
+    .no { background: #f44336; color: #fff; }
+    .alt { background: #2196f3; color: #fff; }
 
-button:hover{transform:scale(1.06);}
+    button:hover { transform: scale(1.05); }
+    .hidden { display: none; }
 
-.yes{background:#4caf50;color:white;}
-.no{background:#f44336;color:white;}
-.alt{background:#2196f3;color:white;}
-
-.hidden{display:none;}
-
-.links button{
-  display:block;
-  width:100%;
-}
-</style>
+    .links button { display: block; width: 100%; margin: 8px 0; }
+  </style>
 </head>
-
 <body>
+  <div class="card" id="card">
 
-<div class="card" id="card">
+    <!-- Step 1 -->
+    <div id="step1">
+      <h1>Heyyy 👋</h1>
+      <p>If you're interested in me, click <strong>Yes</strong>.</p>
+      <button class="yes" onclick="nextStep(1)">Yes</button>
+      <button class="no dodge" onclick="showNo()">No</button>
+    </div>
 
-<!-- STEP 1 -->
-<div id="step1">
-<h1>Heyyy 👋</h1>
-<p>Just wondering… are you really interested in me? 👀</p>
-<button class="yes" onclick="nextStep(1)">Yes</button>
-<button class="no dodge" onclick="showNo()">No</button>
-</div>
+    <!-- Step 2 -->
+    <div id="step2" class="hidden">
+      <h1>Wait 😳</h1>
+      <p>Are you sure?</p>
+      <button class="yes" onclick="nextStep(2)">Yes</button>
+      <button class="no dodge" onclick="showNo()">No</button>
+    </div>
 
-<!-- STEP 2 -->
-<div id="step2" class="hidden">
-<h1>Wait 😳</h1>
-<p>Are you sure?</p>
-<button class="yes" onclick="nextStep(2)">Yes</button>
-<button class="no dodge" onclick="showNo()">No</button>
-</div>
+    <!-- Step 3 -->
+    <div id="step3" class="hidden">
+      <h1>Really?? 👀</h1>
+      <p>Are you <em>really</em> sure?</p>
+      <button class="yes" onclick="nextStep(3)">Yes</button>
+      <button class="no dodge">No</button>
+    </div>
 
-<!-- STEP 3 -->
-<div id="step3" class="hidden">
-<h1>Really?? 👀</h1>
-<p>Are you <em>really</em> sure?</p>
-<button class="yes" onclick="nextStep(3)">Yes</button>
-<button class="no dodge">No</button>
-</div>
+    <!-- Step 4 -->
+    <div id="step4" class="hidden">
+      <h1>Okay then 😄</h1>
+      <p>Would you like to go out and watch a movie with me?</p>
+      <button class="yes" onclick="nextStep(4)">Yes</button>
+      <button class="no dodge" onclick="showNo()">No</button>
+    </div>
 
-<!-- STEP 4 -->
-<div id="step4" class="hidden">
-<h1>Okay then 😄</h1>
-<p>Would you like to go out and watch a movie with me?</p>
-<button class="yes" onclick="nextStep(4)">Yes</button>
-<button class="no dodge" onclick="showNo()">No</button>
-</div>
+    <!-- Step 5 -->
+    <div id="step5" class="hidden">
+      <h1>Last question 🎬</h1>
+      <p>Are you available this weekend or next weekend?</p>
+      <button class="yes" onclick="pickWeekend('This weekend')">This Weekend</button>
+      <button class="yes" onclick="pickWeekend('Next weekend')">Next Weekend</button>
+    </div>
 
-<!-- STEP 5 -->
-<div id="step5" class="hidden">
-<h1>Last question 🎬</h1>
-<p>When are you free?</p>
-<button class="yes" onclick="pickWeekend('This weekend')">This Weekend</button>
-<button class="yes" onclick="pickWeekend('Next weekend')">Next Weekend</button>
-</div>
+    <!-- Step 6 -->
+    <div id="step6" class="hidden">
+      <h1>One last thing ✨</h1>
+      <p>Can I have your email? I’ll send a little receipt/confirmation 💌</p>
+      <input type="email" id="email" placeholder="your@email.com" />
+      <button class="alt" onclick="submitEmail()">Submit</button>
+      <p style="font-size:0.8rem;opacity:0.8;">Sender: patrickmueden11@gmail.com</p>
+    </div>
 
-<!-- STEP 6 -->
-<div id="step6" class="hidden">
-<h1>One last thing ✨</h1>
-<p>Enter your email and I’ll send you a bouquet 💐</p>
-<input type="email" id="email" placeholder="your@email.com"/>
-<button class="alt" onclick="submitEmail()">Send My Bouquet 🌸</button>
-<p style="font-size:0.8rem;opacity:0.8;">
-Sender: patrickmueden11@gmail.com
-</p>
-</div>
+    <!-- Thank you -->
+    <div id="stepThanks" class="hidden">
+      <h1>Thank you 💖</h1>
+      <p>Thank you for accepting my invitation. I really appreciate it.</p>
+      <div class="links">
+        <button class="alt" onclick="openMessenger()">Open Messenger</button>
+        <button class="alt" onclick="openIG()">Open Instagram</button>
+        <button class="alt" onclick="openSMS()">Open SMS</button>
+      </div>
+    </div>
 
-<!-- THANK YOU -->
-<div id="stepThanks" class="hidden">
-<h1>Sent! 💖</h1>
-<p>Your bouquet email is on the way 🌸</p>
+    <!-- No response -->
+    <div id="stepNo" class="hidden">
+      <h1>All good 🙂</h1>
+      <p>No worries at all. Thanks for being honest.</p>
+    </div>
 
-<div class="links">
-<button class="alt" onclick="openMessenger()">Open Messenger</button>
-<button class="alt" onclick="openIG()">Open Instagram</button>
-<button class="alt" onclick="openSMS()">Open SMS</button>
-</div>
-</div>
+  </div>
 
-<!-- NO -->
-<div id="stepNo" class="hidden">
-<h1>All good 🙂</h1>
-<p>No worries at all. Thanks for being honest.</p>
-</div>
+  <script>
+    let chosenWeekend = '';
 
-</div>
+    function nextStep(current) {
+      document.getElementById('step' + current).classList.add('hidden');
+      document.getElementById('step' + (current + 1)).classList.remove('hidden');
+    }
 
+    function showNo() {
+      ['step1','step2','step3','step4','step5','step6'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+      document.getElementById('stepNo').classList.remove('hidden');
+    }
 
-<!-- EMAILJS -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    // WORKING dodge logic (inside card bounds)
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.classList.contains('dodge')) {
+        const btn = e.target;
+        const card = document.getElementById('card');
+        const maxX = card.clientWidth - btn.offsetWidth - 20;
+        const maxY = card.clientHeight - btn.offsetHeight - 20;
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+        btn.style.position = 'absolute';
+        btn.style.left = x + 'px';
+        btn.style.top = y + 'px';
+      }
+    });
 
-<script>
-(function(){
-emailjs.init("LPL0NS_Ijw-ORStji");
-})();
-</script>
+    function pickWeekend(choice) {
+      chosenWeekend = choice;
+      document.getElementById('step5').classList.add('hidden');
+      document.getElementById('step6').classList.remove('hidden');
+    }
 
+    function submitEmail() {
+      const email = document.getElementById('email').value;
+      if (!email) return alert('Please enter an email 😊');
+      document.getElementById('step6').classList.add('hidden');
+      document.getElementById('stepThanks').classList.remove('hidden');
+    }
 
-<script>
-let chosenWeekend='';
-
-function nextStep(current){
-document.getElementById('step'+current).classList.add('hidden');
-document.getElementById('step'+(current+1)).classList.remove('hidden');
-}
-
-function showNo(){
-['step1','step2','step3','step4','step5','step6'].forEach(id=>{
-const el=document.getElementById(id);
-if(el) el.classList.add('hidden');
-});
-document.getElementById('stepNo').classList.remove('hidden');
-}
-
-function pickWeekend(choice){
-chosenWeekend=choice;
-document.getElementById('step5').classList.add('hidden');
-document.getElementById('step6').classList.remove('hidden');
-}
-
-function submitEmail(){
-
-const email=document.getElementById('email').value;
-
-if(!chosenWeekend){
-alert("Please choose a weekend first 😊");
-return;
-}
-
-if(!email){
-alert("Please enter an email 😊");
-return;
-}
-
-emailjs.send(
-"idservice_pat2joemama",
-"__ejs-test-mail-service__", // replace if you created a new template
-{
-to_email: email,
-weekend: chosenWeekend
-}
-)
-.then(()=>{
-document.getElementById('step6').classList.add('hidden');
-document.getElementById('stepThanks').classList.remove('hidden');
-})
-.catch((error)=>{
-console.error("FULL ERROR:",error);
-alert("Email failed 😢 Check console.");
-});
-
-}
-
-const msg=()=>encodeURIComponent(`Hey! I said yes 😊 Weekend: ${chosenWeekend}`);
-
-function openMessenger(){
-window.open('https://m.me/?text='+msg(),'_blank');
-}
-
-function openIG(){
-window.open('https://www.instagram.com/direct/new/?text='+msg(),'_blank');
-}
-
-function openSMS(){
-window.open('sms:?&body='+msg(),'_self');
-}
-</script>
-
+    const msg = () => encodeURIComponent(`Hey! I said yes 😊 Weekend: ${chosenWeekend}`);
+    function openMessenger() { window.open('https://m.me/?text=' + msg(), '_blank'); }
+    function openIG() { window.open('https://www.instagram.com/direct/new/?text=' + msg(), '_blank'); }
+    function openSMS() { window.open('sms:?&body=' + msg(), '_self'); }
+  </script>
 </body>
 </html>

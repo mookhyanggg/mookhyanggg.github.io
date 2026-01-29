@@ -1,223 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Heyyy 👀</title>
 
 <style>
+/* RESET */
+* {box-sizing:border-box; margin:0; padding:0; font-family: 'Segoe UI', sans-serif;}
+body, html {height:100%; width:100%; overflow-x:hidden;}
+
+/* CINEMATIC GRADIENT + BACKGROUND IMAGE */
 body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, Helvetica, sans-serif;
-  background: linear-gradient(135deg, #1f1c2c, #928dab);
-  color: #fff;
+  background: linear-gradient(to bottom right, rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url("https://images.unsplash.com/photo-1634055980590-1a44e5a8b3e4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0") center/cover no-repeat;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
+/* GLASS CARD */
 .card {
-  background: rgba(0,0,0,0.6);
-  padding: 30px 25px;
-  border-radius: 12px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
   width: 90%;
-  max-width: 440px;
+  max-width: 460px;
+  padding: 30px 25px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
   text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
   position: relative;
-  overflow: hidden;
+  opacity:0;
+  transform: translateY(30px);
+  animation: cardEnter 0.8s forwards;
 }
 
+@keyframes cardEnter {
+  to {opacity:1; transform: translateY(0);}
+}
+
+/* HEADINGS & TEXT */
+h1 {margin-bottom:12px; font-size:1.7rem; color:#333;}
+p {margin-bottom:18px; font-size:1rem; line-height:1.5; color:#555;}
+
+/* INPUT */
+input {
+  width:100%;
+  padding:12px 14px;
+  font-size:0.95rem;
+  border-radius:10px;
+  border:1px solid #ddd;
+  margin-bottom:14px;
+}
+
+/* BUTTONS */
+button {
+  padding:11px 24px;
+  margin:6px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  font-size:0.95rem;
+  transition:0.25s;
+}
+
+button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12);}
+.yes {background:#4caf50; color:white;}
+.no {background:#f44336; color:white;}
+.alt {background:#2196f3; color:white;}
+.links button{width:100%; display:block; margin:6px 0;}
+
+/* HIDDEN */
 .hidden {display:none;}
 
-button{
-  padding:10px 22px;
-  margin:8px;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
+/* FADE ANIMATION BETWEEN STEPS */
+.fadeIn {animation: fadeIn 0.6s forwards;}
+@keyframes fadeIn {from {opacity:0;} to {opacity:1;}}
+
+/* CONFETTI HEARTS */
+.heart {
+  position:absolute;
+  font-size:1.5rem;
+  animation: floatUp 2s forwards;
+  pointer-events:none;
+  z-index:10;
+}
+@keyframes floatUp {
+  0% {opacity:1; transform:translateY(0) scale(1);}
+  100% {opacity:0; transform:translateY(-120px) scale(1.5);}
 }
 
-.yes{background:#4caf50;color:#fff;}
-.no{background:#f44336;color:#fff;}
-.alt{background:#2196f3;color:#fff;}
-
-.links button{
-  display:block;
-  width:100%;
+/* MOBILE / IPAD RESPONSIVE */
+@media(max-width:768px){
+  .card {padding:25px 20px;}
+  h1 {font-size:1.5rem;}
+  p {font-size:0.95rem;}
+  button {padding:10px 20px;}
 }
 </style>
 </head>
 
 <body>
-
 <div class="card" id="card">
 
-<!-- Steps unchanged -->
-<div id="step1">
-<h1>Heyyy 👋</h1>
-<p>If you're interested in me, click <strong>Yes</strong>.</p>
-<button class="yes" onclick="nextStep(1)">Yes</button>
-<button class="no dodge" onclick="showNo()">No</button>
+  <!-- Step 1 -->
+  <div id="step1">
+    <h1>Heyyy 👋</h1>
+    <p>Just wondering… are you really interested in me? 👀 Click <strong>Yes</strong> if you agree.</p>
+    <button class="yes" onclick="nextStep(1); celebrateYes()">Yes</button>
+    <button class="no dodge" onclick="showNo()">No</button>
+  </div>
+
+  <!-- Step 2 -->
+  <div id="step2" class="hidden">
+    <h1>Wait 😳</h1>
+    <p>Are you sure?</p>
+    <button class="yes" onclick="nextStep(2); celebrateYes()">Yes</button>
+    <button class="no dodge" onclick="showNo()">No</button>
+  </div>
+
+  <!-- Step 3 -->
+  <div id="step3" class="hidden">
+    <h1>Really?? 👀</h1>
+    <p>Are you <em>really</em> sure?</p>
+    <button class="yes" onclick="nextStep(3); celebrateYes()">Yes</button>
+    <button class="no dodge">No</button>
+  </div>
+
+  <!-- Step 4 -->
+  <div id="step4" class="hidden">
+    <h1>Okay then 😄</h1>
+    <p>Would you like to go out and watch a movie with me?</p>
+    <button class="yes" onclick="nextStep(4); celebrateYes()">Yes</button>
+    <button class="no dodge" onclick="showNo()">No</button>
+  </div>
+
+  <!-- Step 5 -->
+  <div id="step5" class="hidden">
+    <h1>Last question 🎬</h1>
+    <p>Are you available this weekend or next weekend?</p>
+    <button class="yes" onclick="pickWeekend('This weekend'); celebrateYes()">This Weekend</button>
+    <button class="yes" onclick="pickWeekend('Next weekend'); celebrateYes()">Next Weekend</button>
+  </div>
+
+  <!-- Step 6 -->
+  <div id="step6" class="hidden">
+    <h1>One last thing ✨</h1>
+    <p>Can I have your email? I’ll send a little receipt/confirmation 💌</p>
+    <input type="email" id="email" placeholder="your@email.com" />
+    <button class="alt" onclick="submitEmail()">Submit</button>
+    <p style="font-size:0.8rem;opacity:0.8;">Sender: patrickmueden11@gmail.com</p>
+  </div>
+
+  <!-- Thank you -->
+  <div id="stepThanks" class="hidden">
+    <h1>Thank you 💖</h1>
+    <p>Thank you for accepting my invitation. I really appreciate it.</p>
+    <div class="links">
+      <button class="alt" onclick="openMessenger()">Open Messenger</button>
+      <button class="alt" onclick="openIG()">Open Instagram</button>
+      <button class="alt" onclick="openSMS()">Open SMS</button>
+    </div>
+  </div>
+
+  <!-- No response -->
+  <div id="stepNo" class="hidden">
+    <h1>All good 🙂</h1>
+    <p>No worries at all. Thanks for being honest.</p>
+  </div>
 </div>
 
-<div id="step2" class="hidden">
-<h1>Wait 😳</h1>
-<p>Are you sure?</p>
-<button class="yes" onclick="nextStep(2)">Yes</button>
-<button class="no dodge" onclick="showNo()">No</button>
-</div>
-
-<div id="step3" class="hidden">
-<h1>Really?? 👀</h1>
-<p>Are you <em>really</em> sure?</p>
-<button class="yes" onclick="nextStep(3)">Yes</button>
-<button class="no dodge">No</button>
-</div>
-
-<div id="step4" class="hidden">
-<h1>Okay then 😄</h1>
-<p>Would you like to go out and watch a movie with me?</p>
-<button class="yes" onclick="nextStep(4)">Yes</button>
-<button class="no dodge" onclick="showNo()">No</button>
-</div>
-
-<div id="step5" class="hidden">
-<h1>Last question 🎬</h1>
-<p>Are you available this weekend or next weekend?</p>
-<button class="yes" onclick="pickWeekend('This weekend')">This Weekend</button>
-<button class="yes" onclick="pickWeekend('Next weekend')">Next Weekend</button>
-</div>
-
-<div style="margin-top: 20px; text-align: center;">
-  <img src="https://images.unsplash.com/photo-1634055980590-1a44e5a8b3e4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0" 
-       alt="Playful image" 
-       style="max-width: 100%; border-radius: 12px; margin-bottom: 10px;">
-  <p style="font-size: 0.9rem; color: #fff; font-style: italic;">
-    Just kidding — you can say <strong>No</strong> if you want 😊
-  </p>
-  <p style="font-size: 0.7rem; color: #aaa;">
-    Photo from <a href="https://unsplash.com/" target="_blank" style="color: #ccc;">Unsplash</a>
-  </p>
-</div>
-
-<div id="step6" class="hidden">
-<h1>One last thing ✨</h1>
-<p>Can I have your email? I’ll send a bouquet 💐</p>
-<input type="email" id="email" placeholder="your@email.com"/>
-<button class="alt" onclick="submitEmail()">Submit</button>
-<p style="font-size:0.8rem;opacity:0.8;">
-Sender: patrickmueden11@gmail.com
-</p>
-</div>
-
-<div id="stepThanks" class="hidden">
-<h1>Email Sent 💖</h1>
-<p>Your bouquet is on the way 🌸</p>
-
-<div class="links">
-<button class="alt" onclick="openMessenger()">Open Messenger</button>
-<button class="alt" onclick="openIG()">Open Instagram</button>
-<button class="alt" onclick="openSMS()">Open SMS</button>
-</div>
-</div>
-
-<div id="stepNo" class="hidden">
-<h1>All good 🙂</h1>
-<p>No worries at all. Thanks for being honest.</p>
-</div>
-
-</div>
-
-
-<!-- ✅ EMAILJS SCRIPT -->
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
 <script>
-emailjs.init("LPL0NS_Ijw-ORStji"); // PUBLIC KEY
+emailjs.init("LPL0NS_Ijw-ORStji");
 </script>
 
-
 <script>
-let chosenWeekend = '';
+let chosenWeekend='';
 
 function nextStep(current){
-document.getElementById('step'+current).classList.add('hidden');
-document.getElementById('step'+(current+1)).classList.remove('hidden');
+  document.getElementById('step'+current).classList.add('hidden');
+  const next = document.getElementById('step'+(current+1));
+  next.classList.remove('hidden');
+  next.classList.add('fadeIn');
 }
 
 function showNo(){
-['step1','step2','step3','step4','step5','step6'].forEach(id=>{
-const el=document.getElementById(id);
-if(el) el.classList.add('hidden');
-});
-document.getElementById('stepNo').classList.remove('hidden');
+  ['step1','step2','step3','step4','step5','step6'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.classList.add('hidden');
+  });
+  document.getElementById('stepNo').classList.remove('hidden');
 }
+
+document.addEventListener('mouseover',(e)=>{
+  if(e.target.classList.contains('dodge')){
+    const btn=e.target;
+    const card=document.getElementById('card');
+    const maxX=card.clientWidth-btn.offsetWidth-20;
+    const maxY=card.clientHeight-btn.offsetHeight-20;
+    btn.style.position='absolute';
+    btn.style.left=Math.random()*maxX+'px';
+    btn.style.top=Math.random()*maxY+'px';
+  }
+});
 
 function pickWeekend(choice){
-chosenWeekend=choice;
-document.getElementById('step5').classList.add('hidden');
-document.getElementById('step6').classList.remove('hidden');
+  chosenWeekend=choice;
+  document.getElementById('step5').classList.add('hidden');
+  const next = document.getElementById('step6');
+  next.classList.remove('hidden');
+  next.classList.add('fadeIn');
 }
 
-
-/* ⭐⭐⭐ EMAIL SEND FUNCTION ⭐⭐⭐ */
-
+/* EMAILJS SEND FUNCTION */
 function submitEmail(){
+  const email=document.getElementById('email').value;
+  if(!email) return alert('Please enter an email 😊');
 
-const email=document.getElementById('email').value.trim();
-
-if(!chosenWeekend){
-alert("Please choose a weekend first 😊");
-return;
+  emailjs.send(
+    "service_pat2joemama",
+    "template_f0pzx8b",
+    {to_email: email, weekend: chosenWeekend}
+  )
+  .then(()=> {
+    document.getElementById('step6').classList.add('hidden');
+    const thanks = document.getElementById('stepThanks');
+    thanks.classList.remove('hidden');
+    thanks.classList.add('fadeIn');
+  })
+  .catch(err => {
+    console.log(err);
+    alert("Email failed 😢 Check console.");
+  });
 }
 
-if(!email){
-alert("Please enter an email 😊");
-return;
-}
-
-emailjs.send(
-"service_pat2joemama",
-"template_f0pzx8b",
-{
-to_email: email,
-weekend: chosenWeekend
-}
-)
-.then(function(response){
-
-console.log("SUCCESS!", response.status, response.text);
-
-document.getElementById('step6').classList.add('hidden');
-document.getElementById('stepThanks').classList.remove('hidden');
-
-})
-.catch(function(error){
-
-console.log("FAILED...", error);
-
-alert("Email failed ❌ Check console.");
-
-});
-}
-
-
+/* OPEN LINKS */
 const msg=()=>encodeURIComponent(`Hey! I said yes 😊 Weekend: ${chosenWeekend}`);
+function openMessenger(){window.open('https://m.me/?text='+msg(),'_blank');}
+function openIG(){window.open('https://www.instagram.com/direct/new/?text='+msg(),'_blank');}
+function openSMS(){window.open('sms:?&body='+msg(),'_self');}
 
-function openMessenger(){
-window.open('https://m.me/?text='+msg(),'_blank');
+/* 🎉 CONFETTI HEARTS */
+function celebrateYes(){
+  for(let i=0;i<5;i++){
+    const heart=document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left=Math.random()*100+'%';
+    heart.style.color='red';
+    heart.textContent='❤️';
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),2000);
+  }
 }
 
-function openIG(){
-window.open('https://www.instagram.com/direct/new/?text='+msg(),'_blank');
-}
-
-function openSMS(){
-window.open('sms:?&body='+msg(),'_self');
-}
 </script>
-
 </body>
 </html>

@@ -244,7 +244,7 @@ function celebrateYes(){
   function submitNoEmail(){
   const email = document.getElementById('email')?.value.trim() || "No email provided";
 
-  // Send decline email to you
+
   emailjs.send(
     "service_pat2joemama",
     "template_f0pzx8b",
@@ -254,12 +254,10 @@ function celebrateYes(){
     }
   )
   .then(()=> {
-    // Hide all other steps
     ['step1','step2','step3','step4','step5','step6'].forEach(id=>{
       const el = document.getElementById(id);
       if(el) el.classList.add('hidden');
     });
-    // Show feedback chatbox
     const feedback = document.getElementById('stepFeedback');
     feedback.classList.remove('hidden');
     feedback.classList.add('fadeIn');
@@ -281,7 +279,6 @@ function celebrateYes(){
     }
   )
   .then(()=>{
-    // Show final thank you message
     const feedbackStep = document.getElementById('stepFeedback');
     feedbackStep.classList.add('hidden');
 

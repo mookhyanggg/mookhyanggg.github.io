@@ -1,187 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Heyyy 👀</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(135deg, #1f1c2c, #928dab);
-      color: #fff;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heyyy 👀</title>
 
-    .card {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 30px 25px;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 440px;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-      position: relative;
-      overflow: hidden;
-    }
+<style>
+* {box-sizing:border-box; margin:0; padding:0; font-family: 'Segoe UI', sans-serif;}
+body, html {height:100%; width:100%; overflow-x:hidden;}
 
-    h1 { margin-bottom: 12px; font-size: 1.7rem; }
-    p { font-size: 1rem; line-height: 1.5; margin-bottom: 18px; }
+body {
+  background: linear-gradient(to bottom right, rgba(0,0,0,0.3), rgba(0,0,0,0.5)),
+  url("https://images.unsplash.com/photo-1634055980590-1a44e5a8b3e4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0")
+  center/cover no-repeat;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
 
-    input {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 8px;
-      border: none;
-      margin-bottom: 14px;
-      font-size: 0.95rem;
-    }
+.card {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  width: 90%;
+  max-width: 460px;
+  padding: 30px 25px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  text-align: center;
+  position: relative;
+  opacity:0;
+  transform: translateY(30px);
+  animation: cardEnter 0.8s forwards;
+}
 
-    button {
-      padding: 10px 22px;
-      margin: 8px;
-      border: none;
-      border-radius: 20px;
-      font-size: 0.95rem;
-      cursor: pointer;
-      position: relative;
-      transition: transform 0.15s ease, left 0.15s ease, top 0.15s ease;
-    }
+@keyframes cardEnter {
+  to {opacity:1; transform: translateY(0);}
+}
 
-    .yes { background: #4caf50; color: #fff; }
-    .no { background: #f44336; color: #fff; }
-    .alt { background: #2196f3; color: #fff; }
+h1 {margin-bottom:12px; font-size:1.7rem; color:#333;}
+p {margin-bottom:18px; font-size:1rem; line-height:1.5; color:#555;}
 
-    button:hover { transform: scale(1.05); }
-    .hidden { display: none; }
+input {
+  width:100%;
+  padding:12px 14px;
+  font-size:0.95rem;
+  border-radius:10px;
+  border:1px solid #ddd;
+  margin-bottom:14px;
+}
 
-    .links button { display: block; width: 100%; margin: 8px 0; }
-  </style>
+button {
+  padding:11px 24px;
+  margin:6px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  font-size:0.95rem;
+  transition:0.25s;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow:0 8px 18px rgba(0,0,0,0.12);
+}
+
+.yes {background:#4caf50; color:white;}
+.no {background:#f44336; color:white;}
+.alt {background:#2196f3; color:white;}
+
+.hidden {display:none;}
+.fadeIn {animation: fadeIn 0.6s forwards;}
+@keyframes fadeIn {from {opacity:0;} to {opacity:1;}}
+
+.heart {
+  position:absolute;
+  font-size:1.5rem;
+  animation: floatUp 2s forwards;
+  pointer-events:none;
+  z-index:10;
+}
+@keyframes floatUp {
+  0% {opacity:1; transform:translateY(0) scale(1);}
+  100% {opacity:0; transform:translateY(-120px) scale(1.5);}
+}
+</style>
 </head>
+
 <body>
-  <div class="card" id="card">
 
-    <!-- Step 1 -->
-    <div id="step1">
-      <h1>Heyyy 👋</h1>
-      <p>If you're interested in me, click <strong>Yes</strong>.</p>
-      <button class="yes" onclick="nextStep(1)">Yes</button>
-      <button class="no dodge" onclick="showNo()">No</button>
-    </div>
+<div class="card" id="card">
 
-    <!-- Step 2 -->
-    <div id="step2" class="hidden">
-      <h1>Wait 😳</h1>
-      <p>Are you sure?</p>
-      <button class="yes" onclick="nextStep(2)">Yes</button>
-      <button class="no dodge" onclick="showNo()">No</button>
-    </div>
+  <!-- Step 1 -->
+  <div id="step1">
+    <h1>Heyyy 👋</h1>
+    <p>Just random thought… are you really interested in me? cause i'm clueless asfk👀 Click <strong>Yes</strong> if you agree.</p>
+    <button class="yes" onclick="nextStep(1); celebrateYes()">Yes</button>
+    <button class="no dodge" onclick="showNo()">No</button>
+  </div>
 
-    <!-- Step 3 -->
-    <div id="step3" class="hidden">
-      <h1>Really?? 👀</h1>
-      <p>Are you <em>really</em> sure?</p>
-      <button class="yes" onclick="nextStep(3)">Yes</button>
-      <button class="no dodge">No</button>
-    </div>
+  <!-- Step 2 -->
+  <div id="step2" class="hidden">
+    <h1>Wait 😳</h1>
+    <p>Are you sure?</p>
+    <button class="yes" onclick="nextStep(2); celebrateYes()">Yes</button>
+    <button class="no dodge" onclick="showNo()">No</button>
+  </div>
 
-    <!-- Step 4 -->
-    <div id="step4" class="hidden">
-      <h1>Okay then 😄</h1>
-      <p>Would you like to go out and watch a movie with me?</p>
-      <button class="yes" onclick="nextStep(4)">Yes</button>
-      <button class="no dodge" onclick="showNo()">No</button>
-    </div>
+  <!-- Step 3 -->
+  <div id="step3" class="hidden">
+    <h1>Really?? 👀</h1>
+    <p>Are you <em>really</em> sure?</p>
+    <button class="yes" onclick="nextStep(3); celebrateYes()">Yes</button>
+    <button class="no dodge">No</button>
+  </div>
 
-    <!-- Step 5 -->
-    <div id="step5" class="hidden">
+  <!-- Step 4 -->
+  <div id="step4" class="hidden">
+    <h1>Okay then 😄</h1>
+    <p>Would you like to go out and watch a movie with me? Nothing grand—just a simple movie, then eat out and gala and idkkk.</p>
+    <button class="yes" onclick="nextStep(4); celebrateYes()">Yes</button>
+    <button class="no dodge" onclick="showNo()">No</button>
+  </div>
+
+  <!-- Step 5: Weekend / Valentine -->
+  <div id="step5" class="hidden">
     <h1>Last question 🎬</h1>
-    <p>Are you available this weekend, next weekend, next next week… or maybe something else? 👀</p>
-    <button class="yes" onclick="pickWeekend('This weekend'); celebrateYes()">This Weekend</button>
-    <button class="yes" onclick="pickWeekend('Next weekend'); celebrateYes()">Next Weekend</button>
-    <button class="yes" onclick="pickWeekend('Next next week'); celebrateYes()">Next Next Week</button>
-    <button class="yes" onclick="pickWeekend('Be my Valentine'); celebrateYes()">Or… be my Valentine 💘</button>
+    <p>Are you available this weekend or next weekend?</p>
+    <button class="yes" onclick="pickChoice('This weekend')">This Weekend</button>
+    <button class="yes" onclick="pickChoice('Next weekend')">Next Weekend</button>
+    <button class="yes" onclick="pickChoice('Next next week')">Next next week</button>
+    <button class="yes" onclick="pickChoice('Be my Valentine 💘')">OR… Just be my Valentine 💘</button>
   </div>
 
-    <!-- Step 6 -->
-    <div id="step6" class="hidden">
-      <h1>One last thing ✨</h1>
-      <p>Can I have your email? I’ll send a little receipt/confirmation 💌</p>
-      <input type="email" id="email" placeholder="your@email.com" />
-      <button class="alt" onclick="submitEmail()">Submit</button>
-      <p style="font-size:0.8rem;opacity:0.8;">Sender: patrickmueden11@gmail.com</p>
-    </div>
-
-    <!-- Thank you -->
-    <div id="stepThanks" class="hidden">
-      <h1>Thank you 💖</h1>
-      <p>Thank you for accepting my invitation. I really appreciate it.</p>
-      <div class="links">
-        <button class="alt" onclick="openMessenger()">Open Messenger</button>
-        <button class="alt" onclick="openIG()">Open Instagram</button>
-        <button class="alt" onclick="openSMS()">Open SMS</button>
-      </div>
-    </div>
-
-    <!-- No response -->
-    <div id="stepNo" class="hidden">
-      <h1>All good 🙂</h1>
-      <p>No worries at all. Thanks for being honest.</p>
-    </div>
-
+  <!-- Step 6: Email -->
+  <div id="step6" class="hidden">
+    <h1>One last thing ✨</h1>
+    <p>Can I have your email? I’ll send a little receipt/confirmation 💌</p>
+    <input type="email" id="email" placeholder="your@email.com" />
+    <button class="alt" onclick="submitEmail()">Submit</button>
   </div>
 
-  <script>
-    let chosenWeekend = '';
+  <!-- Step 7: Thanks -->
+  <div id="stepThanks" class="hidden">
+    <h1>Thank you 💖</h1>
+    <p>Thank you for accepting my invitation. I really appreciate it.</p>
+  </div>
 
-    function nextStep(current) {
-      document.getElementById('step' + current).classList.add('hidden');
-      document.getElementById('step' + (current + 1)).classList.remove('hidden');
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+emailjs.init("LPL0NS_Ijw-ORStji");
+
+let chosenWeekend = '';
+
+function nextStep(n){
+  document.getElementById('step'+n).classList.add('hidden');
+  document.getElementById('step'+(n+1)).classList.remove('hidden');
+}
+
+function pickChoice(choice){
+  chosenWeekend = choice;
+  document.getElementById('step5').classList.add('hidden');
+  document.getElementById('step6').classList.remove('hidden');
+  celebrateYes();
+}
+
+function submitEmail(){
+  const email = document.getElementById('email').value;
+  if(!email) return alert("Please enter an email 😊");
+
+  // Custom message for Valentine
+  let customMessage = '';
+  if(chosenWeekend.includes('Valentine')){
+    customMessage = `
+Hi 💖,
+
+I didn’t really plan this perfectly,
+but I meant it sincerely.
+
+I chose to ask you something simple:
+to be my Valentine 🌹
+
+No pressure, no expectations —
+just a sweet moment, shared willingly.
+
+Happy Valentine’s 💘
+– Patrick
+`;
+  } else {
+    customMessage = `They said yes 😊\nChoice: ${chosenWeekend}`;
+  }
+
+  emailjs.send(
+    "service_pat2joemama",
+    "template_f0pzx8b",
+    {
+      to_email: email,
+      weekend: chosenWeekend,
+      message: customMessage
     }
+  ).then(()=>{
+    document.getElementById('step6').classList.add('hidden');
+    document.getElementById('stepThanks').classList.remove('hidden');
+  }).catch(err=>{
+    console.log(err);
+    alert("Email failed 😢");
+  });
+}
 
-    function showNo() {
-      ['step1','step2','step3','step4','step5','step6'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.add('hidden');
-      });
-      document.getElementById('stepNo').classList.remove('hidden');
-    }
+function celebrateYes(){
+  for(let i=0;i<5;i++){
+    const h=document.createElement('div');
+    h.className='heart';
+    h.textContent='❤️';
+    h.style.left=Math.random()*100+'%';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),2000);
+  }
+}
 
-    // WORKING dodge logic (inside card bounds)
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.classList.contains('dodge')) {
-        const btn = e.target;
-        const card = document.getElementById('card');
-        const maxX = card.clientWidth - btn.offsetWidth - 20;
-        const maxY = card.clientHeight - btn.offsetHeight - 20;
-        const x = Math.random() * maxX;
-        const y = Math.random() * maxY;
-        btn.style.position = 'absolute';
-        btn.style.left = x + 'px';
-        btn.style.top = y + 'px';
-      }
-    });
+// Optional: No dodge function if you want the “No” buttons to move
+function makeDodging(btn) {
+  const card = document.getElementById('card');
+  const maxX = card.clientWidth - btn.offsetWidth - 20;
+  const maxY = card.clientHeight - btn.offsetHeight - 20;
+  const dodge = () => {
+    btn.style.position = 'absolute';
+    btn.style.left = Math.random()*maxX+'px';
+    btn.style.top = Math.random()*maxY+'px';
+  };
+  const startDodge = (e)=>{ e.preventDefault(); dodge(); };
+  btn.addEventListener('pointerover', startDodge);
+  btn.addEventListener('touchstart', startDodge);
+}
+document.querySelectorAll('button.no.dodge').forEach(makeDodging);
+</script>
 
-    function pickWeekend(choice) {
-      chosenWeekend = choice;
-      document.getElementById('step5').classList.add('hidden');
-      document.getElementById('step6').classList.remove('hidden');
-    }
-
-    function submitEmail() {
-      const email = document.getElementById('email').value;
-      if (!email) return alert('Please enter an email 😊');
-      document.getElementById('step6').classList.add('hidden');
-      document.getElementById('stepThanks').classList.remove('hidden');
-    }
-
-    const msg = () => encodeURIComponent(`Hey! I said yes 😊 Weekend: ${chosenWeekend}`);
-    function openMessenger() { window.open('https://m.me/?text=' + msg(), '_blank'); }
-    function openIG() { window.open('https://www.instagram.com/direct/new/?text=' + msg(), '_blank'); }
-    function openSMS() { window.open('sms:?&body=' + msg(), '_self'); }
-  </script>
 </body>
 </html>

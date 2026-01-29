@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Movie Date?</title>
+  <title>Heyyy 👀</title>
   <style>
     body {
       margin: 0;
@@ -21,14 +21,14 @@
       padding: 30px 25px;
       border-radius: 12px;
       width: 90%;
-      max-width: 400px;
+      max-width: 420px;
       text-align: center;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
 
     h1 {
       margin-bottom: 15px;
-      font-size: 1.8rem;
+      font-size: 1.7rem;
     }
 
     p {
@@ -38,13 +38,13 @@
     }
 
     button {
-      padding: 10px 20px;
+      padding: 10px 22px;
       margin: 8px;
       border: none;
       border-radius: 20px;
       font-size: 0.95rem;
       cursor: pointer;
-      transition: transform 0.2s, background 0.2s;
+      transition: transform 0.2s, opacity 0.2s;
     }
 
     .yes {
@@ -59,6 +59,7 @@
 
     button:hover {
       transform: scale(1.05);
+      opacity: 0.9;
     }
 
     .hidden {
@@ -68,35 +69,64 @@
 </head>
 <body>
   <div class="card">
+
+    <!-- Step 1 -->
     <div id="step1">
-      <h1>Hey 👋</h1>
-      <p>Just wanted to ask first—are you interested in going out with me sometime?</p>
-      <button class="yes" onclick="goYes()">Yes</button>
-      <button class="no" onclick="goNo()">No</button>
+      <h1>Heyyy 👋</h1>
+      <p>If you're interested in me, click <strong>Yes</strong>.</p>
+      <button class="yes" onclick="nextStep(1)">Yes</button>
+      <button class="no" onclick="showNo()">No</button>
     </div>
 
+    <!-- Step 2 -->
     <div id="step2" class="hidden">
-      <h1>Nice 😄</h1>
-      <p>Are you free this weekend or next weekend to watch a movie with me?</p>
-      <p>Nothing grand, just a simple gala.</p>
+      <h1>Wait 😳</h1>
+      <p>Are you sure?</p>
+      <button class="yes" onclick="nextStep(2)">Yes</button>
+      <button class="no" onclick="showNo()">No</button>
+    </div>
+
+    <!-- Step 3 -->
+    <div id="step3" class="hidden">
+      <h1>Really?? 👀</h1>
+      <p>Are you <em>really</em> sure?</p>
+      <button class="yes" onclick="nextStep(3)">Yes</button>
+      <button class="no" onclick="showNo()">No</button>
+    </div>
+
+    <!-- Step 4 -->
+    <div id="step4" class="hidden">
+      <h1>Okay then 😄</h1>
+      <p>Would you like to go out and watch a movie with me?</p>
+      <button class="yes" onclick="nextStep(4)">Yes</button>
+      <button class="no" onclick="showNo()">No</button>
+    </div>
+
+    <!-- Step 5 -->
+    <div id="step5" class="hidden">
+      <h1>Last question 🎬</h1>
+      <p>Are you available this weekend or next weekend?</p>
       <button class="yes">This Weekend</button>
       <button class="yes">Next Weekend</button>
     </div>
 
+    <!-- No response -->
     <div id="stepNo" class="hidden">
       <h1>All good 🙂</h1>
       <p>No worries at all. Thanks for being honest.</p>
     </div>
+
   </div>
 
   <script>
-    function goYes() {
-      document.getElementById('step1').classList.add('hidden');
-      document.getElementById('step2').classList.remove('hidden');
+    function nextStep(current) {
+      document.getElementById('step' + current).classList.add('hidden');
+      document.getElementById('step' + (current + 1)).classList.remove('hidden');
     }
 
-    function goNo() {
-      document.getElementById('step1').classList.add('hidden');
+    function showNo() {
+      const steps = ['step1','step2','step3','step4','step5'];
+      steps.forEach(id => document.getElementById(id).classList.add('hidden'));
       document.getElementById('stepNo').classList.remove('hidden');
     }
   </script>

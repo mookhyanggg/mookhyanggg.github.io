@@ -175,34 +175,29 @@ function nextStep(current){
   next.classList.add('fadeIn');
 }
 
-function showNo(){
-  ['step1','step2','step3','step4','step5','step6'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.classList.add('hidden');
-  });
-  document.getElementById('stepNo').classList.remove('hidden');
+function makeDodging(btn) {
+  const card = document.getElementById('card');
+  const maxX = card.clientWidth - btn.offsetWidth - 20;
+  const maxY = card.clientHeight - btn.offsetHeight - 20;
+
+  const dodge = () => {
+    btn.style.position = 'absolute';
+    btn.style.left = Math.random() * maxX + 'px';
+    btn.style.top = Math.random() * maxY + 'px';
+  };
+
+  // dodge immediately on pointer/touch
+  const startDodge = (e) => {
+    e.preventDefault(); // prevent accidental click
+    dodge();
+  };
+
+  btn.addEventListener('pointerover', startDodge);
+  btn.addEventListener('touchstart', startDodge);
 }
 
-document.querySelectorAll('button.no.dodge').forEach(btn => {
-  btn.addEventListener('mouseenter', () => {
-    const card = document.getElementById('card');
-    const maxX = card.clientWidth - btn.offsetWidth - 20;
-    const maxY = card.clientHeight - btn.offsetHeight - 20;
-
-    const dodge = () => {
-      btn.style.position = 'absolute';
-      btn.style.left = Math.random() * maxX + 'px';
-      btn.style.top = Math.random() * maxY + 'px';
-    };
-
-    // start infinite dodge while hovered
-    btn._interval = setInterval(dodge, 300);
-  });
-
-  btn.addEventListener('mouseleave', () => {
-    clearInterval(btn._interval);
-  });
-});
+// apply to all dodging buttons
+document.querySelectorAll('button.no.dodge').forEach(makeDodging);
 
 function pickWeekend(choice){
   chosenWeekend=choice;

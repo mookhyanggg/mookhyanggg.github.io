@@ -6,11 +6,9 @@
 <title>Heyyy 👀</title>
 
 <style>
-/* RESET */
 * {box-sizing:border-box; margin:0; padding:0; font-family: 'Segoe UI', sans-serif;}
 body, html {height:100%; width:100%; overflow-x:hidden;}
 
-/* CINEMATIC GRADIENT + BACKGROUND IMAGE */
 body {
   background: linear-gradient(to bottom right, rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url("https://images.unsplash.com/photo-1634055980590-1a44e5a8b3e4?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0") center/cover no-repeat;
   display:flex;
@@ -18,7 +16,6 @@ body {
   align-items:center;
 }
 
-/* GLASS CARD */
 .card {
   background: rgba(255,255,255,0.85);
   backdrop-filter: blur(12px);
@@ -38,11 +35,9 @@ body {
   to {opacity:1; transform: translateY(0);}
 }
 
-/* HEADINGS & TEXT */
 h1 {margin-bottom:12px; font-size:1.7rem; color:#333;}
 p {margin-bottom:18px; font-size:1rem; line-height:1.5; color:#555;}
 
-/* INPUT */
 input {
   width:100%;
   padding:12px 14px;
@@ -52,7 +47,6 @@ input {
   margin-bottom:14px;
 }
 
-/* BUTTONS */
 button {
   padding:11px 24px;
   margin:6px;
@@ -69,14 +63,11 @@ button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12
 .alt {background:#2196f3; color:white;}
 .links button{width:100%; display:block; margin:6px 0;}
 
-/* HIDDEN */
 .hidden {display:none;}
-
-/* FADE ANIMATION BETWEEN STEPS */
+  
 .fadeIn {animation: fadeIn 0.6s forwards;}
 @keyframes fadeIn {from {opacity:0;} to {opacity:1;}}
 
-/* CONFETTI HEARTS */
 .heart {
   position:absolute;
   font-size:1.5rem;
@@ -89,7 +80,6 @@ button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12
   100% {opacity:0; transform:translateY(-120px) scale(1.5);}
 }
 
-/* MOBILE / IPAD RESPONSIVE */
 @media(max-width:768px){
   .card {padding:25px 20px;}
   h1 {font-size:1.5rem;}
@@ -102,7 +92,6 @@ button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12
 <body>
 <div class="card" id="card">
 
-  <!-- Step 1 -->
   <div id="step1">
     <h1>Heyyy 👋</h1>
     <p>Just random thought… are you really interested in me? cause i'm clueless asfk👀 Click <strong>Yes</strong> if you agree.</p>
@@ -110,7 +99,6 @@ button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12
     <button class="no dodge" onclick="showNo()">No</button>
   </div>
 
-  <!-- Step 2 -->
   <div id="step2" class="hidden">
     <h1>Wait 😳</h1>
     <p>Are you sure?</p>
@@ -118,7 +106,6 @@ button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12
     <button class="no dodge" onclick="showNo()">No</button>
   </div>
 
-  <!-- Step 3 -->
   <div id="step3" class="hidden">
     <h1>Really?? 👀</h1>
     <p>Are you <em>really</em> sure?</p>
@@ -126,7 +113,6 @@ button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12
     <button class="no dodge">No</button>
   </div>
 
-  <!-- Step 4 -->
   <div id="step4" class="hidden">
     <h1>Okay then 😄</h1>
     <p>Would you like to go out and watch a movie with me?</p>
@@ -134,7 +120,6 @@ button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12
     <button class="no dodge" onclick="showNo()">No</button>
   </div>
 
-  <!-- Step 5 -->
   <div id="step5" class="hidden">
     <h1>Last question 🎬</h1>
     <p>Are you available this weekend or next weekend?</p>
@@ -142,7 +127,6 @@ button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12
     <button class="yes" onclick="pickWeekend('Next weekend'); celebrateYes()">Next Weekend</button>
   </div>
 
-  <!-- Step 6 -->
   <div id="step6" class="hidden">
   <h1>One last thing ✨</h1>
   <p>Can I have your email? I’ll send a little receipt/confirmation 💌</p>
@@ -154,8 +138,6 @@ button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12
   <p style="font-size:0.8rem;opacity:0.8;">Sender: patrickmueden11@gmail.com</p>
   </div>
 
-
-  <!-- Thank you -->
   <div id="stepThanks" class="hidden">
     <h1>Thank you 💖</h1>
     <p>Thank you for accepting my invitation. I really appreciate it.</p>
@@ -166,11 +148,16 @@ button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12
     </div>
   </div>
 
-  <!-- No response -->
   <div id="stepNo" class="hidden">
     <h1>All good 🙂</h1>
     <p>No worries at all. Thanks for being honest bih as niqqer.</p>
   </div>
+  <div id="stepFeedback" class="hidden">
+  <h1>Leave a quick feedback 💬</h1>
+  <p>You can leave a short message before you go.</p>
+  <input type="text" id="feedbackInput" placeholder="All good..." />
+  <button class="alt" onclick="submitFeedback()">Send Feedback</button>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
@@ -216,7 +203,6 @@ function pickWeekend(choice){
   next.classList.add('fadeIn');
 }
 
-/* EMAILJS SEND FUNCTION */
 function submitEmail(){
   const email=document.getElementById('email').value;
   if(!email) return alert('Please enter an email 😊');
@@ -238,13 +224,11 @@ function submitEmail(){
   });
 }
 
-/* OPEN LINKS */
 const msg=()=>encodeURIComponent(`Hey! I said yes 😊 Weekend: ${chosenWeekend}`);
 function openMessenger(){window.open('https://m.me/?text='+msg(),'_blank');}
 function openIG(){window.open('https://www.instagram.com/direct/new/?text='+msg(),'_blank');}
 function openSMS(){window.open('sms:?&body='+msg(),'_self');}
 
-/* 🎉 CONFETTI HEARTS */
 function celebrateYes(){
   for(let i=0;i<5;i++){
     const heart=document.createElement('div');
@@ -260,30 +244,57 @@ function celebrateYes(){
   function submitNoEmail(){
   const email = document.getElementById('email')?.value.trim() || "No email provided";
 
-  // Send email to you notifying the decline
+  // Send decline email to you
   emailjs.send(
     "service_pat2joemama",
     "template_f0pzx8b",
     {
-      to_email: "patrickmueden11@gmail.com", // YOU receive the "decline"
+      to_email: "patrickmueden11@gmail.com",
       weekend: "Declined: " + chosenWeekend + " | Visitor email: " + email
     }
   )
   .then(()=> {
-    // Show No response screen
+    // Hide all other steps
     ['step1','step2','step3','step4','step5','step6'].forEach(id=>{
       const el = document.getElementById(id);
       if(el) el.classList.add('hidden');
     });
-    const noScreen = document.getElementById('stepNo');
-    noScreen.classList.remove('hidden');
-    noScreen.classList.add('fadeIn');
+    // Show feedback chatbox
+    const feedback = document.getElementById('stepFeedback');
+    feedback.classList.remove('hidden');
+    feedback.classList.add('fadeIn');
   })
   .catch(err => {
     console.log(err);
     alert("Email failed ❌ Check console.");
   });
 }
+  function submitFeedback(){
+  const feedback = document.getElementById('feedbackInput').value.trim() || "No message";
+
+  emailjs.send(
+    "service_pat2joemama",
+    "template_f0pzx8b",
+    {
+      to_email: "patrickmueden11@gmail.com",
+      weekend: "Declined: " + chosenWeekend + " | Feedback: " + feedback
+    }
+  )
+  .then(()=>{
+    // Show final thank you message
+    const feedbackStep = document.getElementById('stepFeedback');
+    feedbackStep.classList.add('hidden');
+
+    const noScreen = document.getElementById('stepNo');
+    noScreen.classList.remove('hidden');
+    noScreen.classList.add('fadeIn');
+  })
+  .catch(err=>{
+    console.log(err);
+    alert("Feedback email failed ❌ Check console.");
+  });
+}
+
 
 </script>
 </body>

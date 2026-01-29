@@ -133,12 +133,17 @@ button:hover {
   </div>
 
   <!-- Step 6: Email -->
-  <div id="step6" class="hidden">
-    <h1>One last thing ✨</h1>
-    <p>Can I have your email? I’ll send a little receipt/confirmation 💌</p>
-    <input type="email" id="email" placeholder="your@email.com" />
+<div id="step6" class="hidden">
+  <h1>One last thing ✨</h1>
+  <p>Can I have your email? I’ll send a little receipt/confirmation 💌</p>
+  <input type="email" id="email" placeholder="your@email.com" />
+  <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
     <button class="alt" onclick="submitEmail()">Submit</button>
+    <button class="no" onclick="submitNoEmail()">This is the button that politely declines on everything</button>
   </div>
+  <p style="font-size:0.8rem;opacity:0.8;">Sender: patrickmueden11@gmail.com</p>
+</div>
+
 
   <!-- Step 7: Thanks -->
   <div id="stepThanks" class="hidden">
@@ -218,6 +223,31 @@ function celebrateYes(){
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),2000);
   }
+}
+function submitNoEmail(){
+  const email = document.getElementById('email')?.value.trim() || "No email provided";
+
+  emailjs.send(
+    "service_pat2joemama",
+    "template_f0pzx8b",
+    {
+      to_email: "patrickmueden11@gmail.com",
+      weekend: "Declined: " + chosenWeekend + " | Visitor email: " + email
+    }
+  )
+  .then(()=> {
+    ['step1','step2','step3','step4','step5','step6'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.classList.add('hidden');
+    });
+    const feedback = document.getElementById('stepFeedback');
+    feedback.classList.remove('hidden');
+    feedback.classList.add('fadeIn');
+  })
+  .catch(err => {
+    console.log(err);
+    alert("Email failed ❌ Check console.");
+  });
 }
 
 // Optional: No dodge function if you want the “No” buttons to move

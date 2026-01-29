@@ -56,6 +56,8 @@
     .alt { background: #2196f3; color: #fff; }
 
     button:hover { transform: scale(1.05); opacity: 0.95; }
+
+    .dodge { position: relative; }
     .hidden { display: none; }
 
     .links button { display: block; width: 100%; margin: 8px 0; }
@@ -69,7 +71,7 @@
       <h1>Heyyy 👋</h1>
       <p>If you're interested in me, click <strong>Yes</strong>.</p>
       <button class="yes" onclick="nextStep(1)">Yes</button>
-      <button class="no" onclick="showNo()">No</button>
+      <button class="no dodge" onclick="showNo()">No</button>
     </div>
 
     <!-- Step 2 -->
@@ -77,7 +79,7 @@
       <h1>Wait 😳</h1>
       <p>Are you sure?</p>
       <button class="yes" onclick="nextStep(2)">Yes</button>
-      <button class="no" onclick="showNo()">No</button>
+      <button class="no dodge" onclick="showNo()">No</button>
     </div>
 
     <!-- Step 3 (dodging NO) -->
@@ -85,7 +87,7 @@
       <h1>Really?? 👀</h1>
       <p>Are you <em>really</em> sure?</p>
       <button class="yes" onclick="nextStep(3)">Yes</button>
-      <button id="dodgeNo" class="no">No</button>
+      <button class="no dodge">No</button>
     </div>
 
     <!-- Step 4 -->
@@ -93,7 +95,7 @@
       <h1>Okay then 😄</h1>
       <p>Would you like to go out and watch a movie with me?</p>
       <button class="yes" onclick="nextStep(4)">Yes</button>
-      <button class="no" onclick="showNo()">No</button>
+      <button class="no dodge" onclick="showNo()">No</button>
     </div>
 
     <!-- Step 5 -->
@@ -157,7 +159,14 @@
       btn.style.top = y + 'px';
     };
     document.addEventListener('mouseover', (e) => {
-      if (e.target && e.target.id === 'dodgeNo') dodgeBtn();
+      if (e.target && e.target.classList.contains('dodge')) {
+        const btn = e.target;
+        const x = Math.random() * 160 - 80;
+        const y = Math.random() * 100 - 50;
+        btn.style.left = x + 'px';
+        btn.style.top = y + 'px';
+      }
+    });
     });
 
     function pickWeekend(choice) {

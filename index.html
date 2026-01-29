@@ -122,13 +122,15 @@ button:hover {
     <button class="no dodge" onclick="showNo()">No</button>
   </div>
 
-  <!-- Step 5: Weekend -->
-  <div id="step5" class="hidden">
-    <h1>Last question 🎬</h1>
-    <p>Are you available this weekend or next weekend?</p>
-    <button class="yes" onclick="pickWeekend('This weekend'); celebrateYes()">This Weekend</button>
-    <button class="yes" onclick="pickWeekend('Next weekend'); celebrateYes()">Next Weekend</button>
-  </div>
+<div id="step5" class="hidden">
+  <h1>Last question 🎬</h1>
+  <p>Are you available this weekend or next weekend?</p>
+  <button class="yes" onclick="pickWeekend('This weekend'); celebrateYes()">This Weekend</button>
+  <button class="yes" onclick="pickWeekend('Next weekend'); celebrateYes()">Next Weekend</button>
+  <button class="yes" onclick="pickWeekend('Next next week'); celebrateYes()">Next Next Week</button>
+  <button class="yes" onclick="pickWeekend('Be my Valentine'); celebrateYes()">OR… Just be my Valentine 💘</button>
+</div>
+
 
   <!-- Step 6: Email -->
   <div id="step6" class="hidden">
@@ -201,12 +203,19 @@ function makeDodging(btn) {
 document.querySelectorAll('button.no.dodge').forEach(makeDodging);
 
 function pickWeekend(choice){
-  chosenWeekend=choice;
+  chosenWeekend = choice;
   document.getElementById('step5').classList.add('hidden');
+  
   const next = document.getElementById('step6');
   next.classList.remove('hidden');
   next.classList.add('fadeIn');
+
+  // If she picked Valentine, we can prefill email message or set a custom flag
+  if(choice === 'Be my Valentine'){
+    document.getElementById('email').placeholder = "your@email.com 💌";
+  }
 }
+
 
 function submitEmail(){
   const email=document.getElementById('email').value;

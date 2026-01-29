@@ -47,31 +47,29 @@
       border-radius: 20px;
       font-size: 0.95rem;
       cursor: pointer;
-      transition: transform 0.2s, opacity 0.2s, left 0.15s, top 0.15s;
       position: relative;
+      transition: transform 0.15s ease, left 0.15s ease, top 0.15s ease;
     }
 
     .yes { background: #4caf50; color: #fff; }
     .no { background: #f44336; color: #fff; }
     .alt { background: #2196f3; color: #fff; }
 
-    button:hover { transform: scale(1.05); opacity: 0.95; }
-
-    .dodge { position: relative; }
+    button:hover { transform: scale(1.05); }
     .hidden { display: none; }
 
     .links button { display: block; width: 100%; margin: 8px 0; }
   </style>
 </head>
 <body>
-  <div class="card">
+  <div class="card" id="card">
 
     <!-- Step 1 -->
     <div id="step1">
       <h1>Heyyy 👋</h1>
       <p>If you're interested in me, click <strong>Yes</strong>.</p>
       <button class="yes" onclick="nextStep(1)">Yes</button>
-      <button class="no dodge">No</button>
+      <button class="no dodge" onclick="showNo()">No</button>
     </div>
 
     <!-- Step 2 -->
@@ -79,10 +77,10 @@
       <h1>Wait 😳</h1>
       <p>Are you sure?</p>
       <button class="yes" onclick="nextStep(2)">Yes</button>
-      <button class="no dodge">No</button>
+      <button class="no dodge" onclick="showNo()">No</button>
     </div>
 
-    <!-- Step 3 (dodging NO) -->
+    <!-- Step 3 -->
     <div id="step3" class="hidden">
       <h1>Really?? 👀</h1>
       <p>Are you <em>really</em> sure?</p>
@@ -95,7 +93,7 @@
       <h1>Okay then 😄</h1>
       <p>Would you like to go out and watch a movie with me?</p>
       <button class="yes" onclick="nextStep(4)">Yes</button>
-      <button class="no dodge">No</button>
+      <button class="no dodge" onclick="showNo()">No</button>
     </div>
 
     <!-- Step 5 -->
@@ -106,11 +104,11 @@
       <button class="yes" onclick="pickWeekend('Next weekend')">Next Weekend</button>
     </div>
 
-    <!-- Step 6: Email receipt -->
+    <!-- Step 6 -->
     <div id="step6" class="hidden">
       <h1>One last thing ✨</h1>
       <p>Can I have your email? I’ll send a little receipt/confirmation 💌</p>
-      <input type="email" id="email" placeholder="your@email.com" required />
+      <input type="email" id="email" placeholder="your@email.com" />
       <button class="alt" onclick="submitEmail()">Submit</button>
       <p style="font-size:0.8rem;opacity:0.8;">Sender: patrickmueden11@gmail.com</p>
     </div>
@@ -119,7 +117,6 @@
     <div id="stepThanks" class="hidden">
       <h1>Thank you 💖</h1>
       <p>Thank you for accepting my invitation. I really appreciate it.</p>
-      <p>Want to send me your answer?</p>
       <div class="links">
         <button class="alt" onclick="openMessenger()">Open Messenger</button>
         <button class="alt" onclick="openIG()">Open Instagram</button>
@@ -144,29 +141,26 @@
     }
 
     function showNo() {
-      const steps = ['step1','step2','step3','step4','step5','step6'];
-      steps.forEach(id => document.getElementById(id)?.classList.add('hidden'));
+      ['step1','step2','step3','step4','step5','step6'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
       document.getElementById('stepNo').classList.remove('hidden');
     }
 
-    // Dodging NO button
-    const dodgeBtn = () => {
-      const btn = document.getElementById('dodgeNo');
-      if (!btn) return;
-      const x = Math.random() * 140 - 70;
-      const y = Math.random() * 80 - 40;
-      btn.style.left = x + 'px';
-      btn.style.top = y + 'px';
-    };
+    // WORKING dodge logic (inside card bounds)
     document.addEventListener('mouseover', (e) => {
-      if (e.target && e.target.classList.contains('dodge')) {
+      if (e.target.classList.contains('dodge')) {
         const btn = e.target;
-        const x = Math.random() * 160 - 80;
-        const y = Math.random() * 100 - 50;
+        const card = document.getElementById('card');
+        const maxX = card.clientWidth - btn.offsetWidth - 20;
+        const maxY = card.clientHeight - btn.offsetHeight - 20;
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+        btn.style.position = 'absolute';
         btn.style.left = x + 'px';
         btn.style.top = y + 'px';
       }
-    });
     });
 
     function pickWeekend(choice) {
@@ -178,26 +172,14 @@
     function submitEmail() {
       const email = document.getElementById('email').value;
       if (!email) return alert('Please enter an email 😊');
-      // SMTP handled by you
       document.getElementById('step6').classList.add('hidden');
       document.getElementById('stepThanks').classList.remove('hidden');
     }
 
-    const messageText = () => encodeURIComponent(
-      `Hey! I said yes 😊\nWeekend: ${chosenWeekend}`
-    );
-
-    function openMessenger() {
-      window.open('https://m.me/?text=' + messageText(), '_blank');
-    }
-
-    function openIG() {
-      window.open('https://www.instagram.com/direct/new/?text=' + messageText(), '_blank');
-    }
-
-    function openSMS() {
-      window.open('sms:?&body=' + messageText(), '_self');
-    }
+    const msg = () => encodeURIComponent(`Hey! I said yes 😊 Weekend: ${chosenWeekend}`);
+    function openMessenger() { window.open('https://m.me/?text=' + msg(), '_blank'); }
+    function openIG() { window.open('https://www.instagram.com/direct/new/?text=' + msg(), '_blank'); }
+    function openSMS() { window.open('sms:?&body=' + msg(), '_self'); }
   </script>
 </body>
 </html>

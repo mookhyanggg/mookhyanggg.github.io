@@ -183,34 +183,25 @@ function showNo(){
   document.getElementById('stepNo').classList.remove('hidden');
 }
 
-document.addEventListener('mouseover', (e) => {
-  if (e.target.classList.contains('dodge')) {
-    const btn = e.target;
+document.querySelectorAll('button.no.dodge').forEach(btn => {
+  btn.addEventListener('mouseenter', () => {
     const card = document.getElementById('card');
     const maxX = card.clientWidth - btn.offsetWidth - 20;
     const maxY = card.clientHeight - btn.offsetHeight - 20;
 
-    // Move button randomly inside card infinitely while hovered
     const dodge = () => {
+      btn.style.position = 'absolute';
       btn.style.left = Math.random() * maxX + 'px';
       btn.style.top = Math.random() * maxY + 'px';
     };
 
-    // initial dodge
-    dodge();
-    
-    // start interval for continuous dodge
-    if (!btn.dataset.dodging) {
-      btn.dataset.dodging = 'true';
-      btn._interval = setInterval(dodge, 500); // dodge every 0.5s
-    }
-    
-    // stop when mouse leaves button
-    btn.addEventListener('mouseleave', () => {
-      clearInterval(btn._interval);
-      btn.dataset.dodging = '';
-    }, { once: true });
-  }
+    // start infinite dodge while hovered
+    btn._interval = setInterval(dodge, 300);
+  });
+
+  btn.addEventListener('mouseleave', () => {
+    clearInterval(btn._interval);
+  });
 });
 
 function pickWeekend(choice){

@@ -150,7 +150,7 @@ button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12
 
   <div id="stepNo" class="hidden">
     <h1>All good 🙂</h1>
-    <p>No worries at all. Thanks for being honest bih as niqqer.</p>
+    <p>No worries at all. Thanks for being honest bih as niqqer. Just to be clear, I’m giving this whole thing a try — if it doesn’t work out, that’s totally fine. I’m not really looking for anything serious right now. I appreciate your time and attention, and I won’t bother you further.</p>
   </div>
   <div id="stepFeedback" class="hidden">
   <h1>Leave a quick feedback 💬</h1>
@@ -183,15 +183,33 @@ function showNo(){
   document.getElementById('stepNo').classList.remove('hidden');
 }
 
-document.addEventListener('mouseover',(e)=>{
-  if(e.target.classList.contains('dodge')){
-    const btn=e.target;
-    const card=document.getElementById('card');
-    const maxX=card.clientWidth-btn.offsetWidth-20;
-    const maxY=card.clientHeight-btn.offsetHeight-20;
-    btn.style.position='absolute';
-    btn.style.left=Math.random()*maxX+'px';
-    btn.style.top=Math.random()*maxY+'px';
+document.addEventListener('mouseover', (e) => {
+  if (e.target.classList.contains('dodge')) {
+    const btn = e.target;
+    const card = document.getElementById('card');
+    const maxX = card.clientWidth - btn.offsetWidth - 20;
+    const maxY = card.clientHeight - btn.offsetHeight - 20;
+
+    // Move button randomly inside card infinitely while hovered
+    const dodge = () => {
+      btn.style.left = Math.random() * maxX + 'px';
+      btn.style.top = Math.random() * maxY + 'px';
+    };
+
+    // initial dodge
+    dodge();
+    
+    // start interval for continuous dodge
+    if (!btn.dataset.dodging) {
+      btn.dataset.dodging = 'true';
+      btn._interval = setInterval(dodge, 500); // dodge every 0.5s
+    }
+    
+    // stop when mouse leaves button
+    btn.addEventListener('mouseleave', () => {
+      clearInterval(btn._interval);
+      btn.dataset.dodging = '';
+    }, { once: true });
   }
 });
 

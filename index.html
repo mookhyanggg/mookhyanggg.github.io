@@ -144,12 +144,16 @@ button:hover {transform: translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12
 
   <!-- Step 6 -->
   <div id="step6" class="hidden">
-    <h1>One last thing ✨</h1>
-    <p>Can I have your email? I’ll send a little receipt/confirmation 💌</p>
-    <input type="email" id="email" placeholder="your@email.com" />
+  <h1>One last thing ✨</h1>
+  <p>Can I have your email? I’ll send a little receipt/confirmation 💌</p>
+  <input type="email" id="email" placeholder="your@email.com" />
+  <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
     <button class="alt" onclick="submitEmail()">Submit</button>
-    <p style="font-size:0.8rem;opacity:0.8;">Sender: patrickmueden11@gmail.com</p>
+    <button class="no" onclick="submitNoEmail()">No, thanks</button>
   </div>
+  <p style="font-size:0.8rem;opacity:0.8;">Sender: patrickmueden11@gmail.com</p>
+  </div>
+
 
   <!-- Thank you -->
   <div id="stepThanks" class="hidden">
@@ -251,6 +255,31 @@ function celebrateYes(){
     document.body.appendChild(heart);
     setTimeout(()=>heart.remove(),2000);
   }
+}
+
+  function submitNoEmail(){
+  const email=document.getElementById('email').value.trim() || "No email provided";
+
+  // Send email to you notifying the decline
+  emailjs.send(
+    "service_pat2joemama",
+    "template_f0pzx8b",
+    {
+      to_email: "patrickmueden11@gmail.com", // YOU receive the "decline"
+      weekend: "Declined: " + chosenWeekend + " | Visitor email: " + email
+    }
+  )
+  .then(()=> {
+    // Show No response screen
+    document.getElementById('step6').classList.add('hidden');
+    const noScreen = document.getElementById('stepNo');
+    noScreen.classList.remove('hidden');
+    noScreen.classList.add('fadeIn');
+  })
+  .catch(err => {
+    console.log(err);
+    alert("Email failed ❌ Check console.");
+  });
 }
 
 </script>

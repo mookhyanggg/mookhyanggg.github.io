@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Date?</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #fff;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px 25px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+      margin-bottom: 15px;
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 8px;
+      border: none;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .yes {
+      background: #4caf50;
+      color: #fff;
+    }
+
+    .no {
+      background: #f44336;
+      color: #fff;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div id="step1">
+      <h1>Hey 👋</h1>
+      <p>Just wanted to ask first—are you interested in going out with me sometime?</p>
+      <button class="yes" onclick="goYes()">Yes</button>
+      <button class="no" onclick="goNo()">No</button>
+    </div>
+
+    <div id="step2" class="hidden">
+      <h1>Nice 😄</h1>
+      <p>Are you free this weekend or next weekend to watch a movie with me?</p>
+      <p>Nothing grand, just a simple gala.</p>
+      <button class="yes">This Weekend</button>
+      <button class="yes">Next Weekend</button>
+    </div>
+
+    <div id="stepNo" class="hidden">
+      <h1>All good 🙂</h1>
+      <p>No worries at all. Thanks for being honest.</p>
+    </div>
+  </div>
+
+  <script>
+    function goYes() {
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('step2').classList.remove('hidden');
+    }
+
+    function goNo() {
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('stepNo').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
